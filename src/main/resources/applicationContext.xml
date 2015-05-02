@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.8.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd">
+
+	<context:component-scan base-package="victor.com.multiwords" />
+	<!-- <jpa:repositories base-package="victor.com.multiwords.dao" /> -->
+	<context:annotation-config />
+	<tx:annotation-driven />
+
+	<!-- dataSource properies -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="dataSource.properties" />
+	</bean>
+
+	<!-- PostgreSQL -->
+	<bean id="dataSourcePostgreSQL" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${postgresql.driverClassName}" />
+		<property name="url" value="${postgresql.url}" />
+		<property name="username" value="${postgresql.username}" />
+		<property name="password" value="${postgresql.password}" />
+	</bean>
+	<bean id="sessionFactoryPostgreSQL" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSourcePostgreSQL" />
+		<property name="packagesToScan" value="victor.com.multiwords.entity" />
+		<property name="configLocation">
+			<value>classpath:hibernate.cfg.xml</value>
+		</property>
+	</bean>
+
+	<!-- SQLite -->
+	<bean id="dataSourceSQLite" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${sqlite.driverClassName}" />
+		<property name="url" value="${sqlite.url}" />
+		<property name="username" value="" />
+		<property name="password" value="" />
+	</bean>
+	<bean id="sessionFactorySQLite" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSourceSQLite" />
+		<property name="packagesToScan" value="victor.com.multiwords.entity" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${sqlite.dialect}</prop>
+			</props>
+		</property>
+		<property name="configLocation">
+			<value>classpath:hibernate.cfg.xml</value>
+		</property>
+	</bean>
+
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:message" />
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+
+
+</beans>
