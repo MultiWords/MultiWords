@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tempUserTable")
+@Table(name="MultiWordsUser")
 public class User {
 
 	@Id
