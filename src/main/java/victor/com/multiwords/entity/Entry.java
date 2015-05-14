@@ -3,13 +3,16 @@ package victor.com.multiwords.entity;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  * @author WRosinski<br/>
  *<br/>
  */
 @Entity
-public class Entry {
+public class Entry extends UserEntity{
 
 	/** data i godzina wejscia - zalogowania */
 	private Date entryDate;
@@ -31,6 +34,14 @@ public class Entry {
 	/** liczba wszystkich nauczonych wyrazow, wlacznie z tymi z obecnego zalogowania */
 	private Integer wholeLernedWordsNumber;
 	
+	//************  RELATIONS  *******************
+	/** jezyk na ktorego dotyczy wejscie */
+	private UserLanguage userLanguage;
+	
+	
+	//********************************************
+	//**********  GETTERS & SETTERS  *************
+	//********************************************
 	public Entry(){
 		entryDate=new Date();
 		exitDate=new Date();
@@ -41,6 +52,12 @@ public class Entry {
 		correctedTestedWordsNumber=0;
 		wholeKnownWordsNumber=0;
 		wholeLernedWordsNumber=0;
+	}
+	/** {@link BaseEntity#id} */
+	@Id
+	@GeneratedValue
+	public Long getId() {
+		return id;
 	}
 
 	/** {@link Entry#entryDate} */
@@ -131,6 +148,17 @@ public class Entry {
 	/** {@link Entry#wholeLernedWordsNumber} */
 	public void setWholeLernedWordsNumber(Integer wholeLernedWordsNumber) {
 		this.wholeLernedWordsNumber = wholeLernedWordsNumber;
+	}
+
+	/** {@link Entry#userLanguage} */
+	@ManyToOne
+	public UserLanguage getUserLanguage() {
+		return userLanguage;
+	}
+
+	/** {@link Entry#userLanguage} */
+	public void setUserLanguage(UserLanguage userLanguage) {
+		this.userLanguage = userLanguage;
 	}
 	
 }

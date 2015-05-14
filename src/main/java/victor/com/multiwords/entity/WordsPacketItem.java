@@ -5,13 +5,16 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  * @author <b>WRosinski</b><br/>
  *<br/>
  */
 @Entity
-public class WordsPacketItem {
+public class WordsPacketItem extends UserEntity{
 
 	/** dodatkowy opis na elemencie zestwu wyrazow */
 	private String description;
@@ -24,10 +27,18 @@ public class WordsPacketItem {
 	/** data kolejnego powtorzenia wyrazu */
 	private Date repeatingDate;
 	/** obraz dodany do elementu zestawu */
-	private Image image;
+	private Byte[] image;
 	/** zapis audio (mp3) dodany do elementu zestawu */
 	private Byte[] audio;
 	
+	//************  RELATIONS  *******************
+	/** zestaw do ktorego zostal wyraz przypisany */
+	private UserWordsPacket userWordsPacket;
+	
+	
+	//********************************************
+	//**********  GETTERS & SETTERS  *************
+	//********************************************
 	public WordsPacketItem(){
 		description=null;
 		example=null;
@@ -37,7 +48,12 @@ public class WordsPacketItem {
 		image=null;
 		audio=null;
 	}
-
+	/** {@link BaseEntity#id} */
+	@Id
+	@GeneratedValue
+	public Long getId() {
+		return id;
+	}
 	/** {@link WordsPacketItem#description} */
 	public String getDescription() {
 		return description;
@@ -88,16 +104,17 @@ public class WordsPacketItem {
 		this.repeatingDate = repeatingDate;
 	}
 
+
 	/** {@link WordsPacketItem#image} */
-	public Image getImage() {
+	public Byte[] getImage() {
 		return image;
 	}
 
 	/** {@link WordsPacketItem#image} */
-	public void setImage(Image image) {
+	public void setImage(Byte[] image) {
 		this.image = image;
 	}
-
+	
 	/** {@link WordsPacketItem#audio} */
 	public Byte[] getAudio() {
 		return audio;
@@ -108,6 +125,19 @@ public class WordsPacketItem {
 		this.audio = audio;
 	}
 	
+
+	/** {@link WordsPacketItem#userWordsPacket} */
+	@ManyToOne
+	public UserWordsPacket getUserWordsPacket() {
+		return userWordsPacket;
+	}
+
+	/** {@link WordsPacketItem#userWordsPacket} */
+	public void setUserWordsPacket(UserWordsPacket userWordsPacket) {
+		this.userWordsPacket = userWordsPacket;
+	}
+
+
 	
 	
 	

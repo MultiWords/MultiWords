@@ -13,7 +13,7 @@
         <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
       
         <!-- Drop and re-create the database on startup -->
-        <property name="hbm2ddl.auto"> update </property>
+        <property name="hbm2ddl.auto">create</property>
         
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">true</property>

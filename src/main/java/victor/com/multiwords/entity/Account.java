@@ -3,13 +3,15 @@ package victor.com.multiwords.entity;
 import java.math.BigDecimal;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 /**
  * @author WRosinski<br/>
  *<br/>
  */
 @Entity
-public class Account {
+public class Account extends BaseEntity{
 
 	/** nazwa konta */
 	private String name;
@@ -21,6 +23,18 @@ public class Account {
 	private Integer monthLimit;
 	/** liczba lat waznosci konta */
 	private Integer yearLimit;
+	
+	//************  RELATIONS  *******************
+
+	//********************************************
+	//**********  GETTERS & SETTERS  *************
+	//********************************************
+	/** {@link BaseEntity#id} */
+	@Id
+	@GeneratedValue
+	public Long getId() {
+		return id;
+	}
 	/** {@link Account#name} */
 	public String getName() {
 		return name;
@@ -60,5 +74,6 @@ public class Account {
 	/** {@link Account#yearLimit} */
 	public void setYearLimit(Integer yearLimit) {
 		this.yearLimit = yearLimit;
-	}	
+	}
+	
 }

@@ -3,13 +3,16 @@ package victor.com.multiwords.entity;
 import java.awt.Image;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  * @author <b>WRosinski</b><br/>
  *<br/>
  */
 @Entity
-public class Word {
+public class Word extends BaseEntity{
 	
 	/** wyraz */
 	private String word;
@@ -20,9 +23,24 @@ public class Word {
 	/** przyklad uzycia wyrazu */
 	private String example;
 	/** obrazek dolaczony do wyrazu */
-	private Image image;
+	private Byte[] image;
 	/** zapis audio (mp3) dolaczony do wyrazu */
 	private Byte[] audio;
+	
+	//************  RELATIONS  *******************
+	/** jezyk, do ktorego nalezy wyraz */
+	private Language language;
+	
+	
+	//********************************************
+	//**********  GETTERS & SETTERS  *************
+	//********************************************
+	/** {@link BaseEntity#id} */
+	@Id
+	@GeneratedValue
+	public Long getId() {
+		return id;
+	}
 	/** {@link Word#word} */
 	public String getWord() {
 		return word;
@@ -55,12 +73,13 @@ public class Word {
 	public void setExample(String example) {
 		this.example = example;
 	}
+
 	/** {@link Word#image} */
-	public Image getImage() {
+	public Byte[] getImage() {
 		return image;
 	}
 	/** {@link Word#image} */
-	public void setImage(Image image) {
+	public void setImage(Byte[] image) {
 		this.image = image;
 	}
 	/** {@link Word#audio} */
@@ -71,8 +90,16 @@ public class Word {
 	public void setAudio(Byte[] audio) {
 		this.audio = audio;
 	}
+	/** {@link Word#language} */
+	@ManyToOne
+	public Language getLanguage() {
+		return language;
+	}
+	/** {@link Word#language} */
+	public void setLanguage(Language language) {
+		this.language = language;
+	}
 	
 	
-	
-	
+		
 }

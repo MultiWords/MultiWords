@@ -1,13 +1,19 @@
 package victor.com.multiwords.entity;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  * @author WRosinski<br/>
  *<br/>
  */
 @Entity
-public class UserLanguage {
+public class UserLanguage extends UserEntity{
 
 	/** nazwa jezyka uzytkownika - uzytkownik moze nazwac jezyk po swojemu */
 	private String name;
@@ -24,6 +30,28 @@ public class UserLanguage {
 	/** liczba wyrazow nauczonych */
 	private Integer lernedWordsNumber;
 	
+	//************  RELATIONS  *******************
+	/** wlasciciel jezyka - osoba uczaca sie tego jezyka */
+	private User user;
+	/** jezyk do ktorego nalezy jezyk uzytkownika */
+	private Language language;
+	/** lista logowan - wejsc */
+	private List<Entry> entryList;
+	/** lista zestawow wyrazow przypisana do jezyka */
+	private List<UserWordsPacket> wordsPacketList;
+	
+	
+	
+	
+	//********************************************
+	//**********  GETTERS & SETTERS  *************
+	//********************************************
+	/** {@link BaseEntity#id} */
+	@Id
+	@GeneratedValue
+	public Long getId() {
+		return id;
+	}
 	public UserLanguage(){
 		name="";
 		wordsPerDay=10;
@@ -102,6 +130,50 @@ public class UserLanguage {
 	/** {@link UserLanguage#lernedWordsNumber} */
 	public void setLernedWordsNumber(Integer lernedWordsNumber) {
 		this.lernedWordsNumber = lernedWordsNumber;
+	}
+
+	/** {@link UserLanguage#user} */
+	@ManyToOne
+	public User getUser() {
+		return user;
+	}
+
+	/** {@link UserLanguage#user} */
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	/** {@link UserLanguage#language} */
+	@ManyToOne
+	public Language getLanguage() {
+		return language;
+	}
+
+	/** {@link UserLanguage#language} */
+	public void setLanguage(Language language) {
+		this.language = language;
+	}
+
+	/** {@link UserLanguage#entryList} */
+	@OneToMany(mappedBy="userLanguage")
+	public List<Entry> getEntryList() {
+		return entryList;
+	}
+
+	/** {@link UserLanguage#entryList} */
+	public void setEntryList(List<Entry> entryList) {
+		this.entryList = entryList;
+	}
+
+	/** {@link UserLanguage#wordsPacketList} */
+	@OneToMany(mappedBy="userLanguage")
+	public List<UserWordsPacket> getWordsPacketList() {
+		return wordsPacketList;
+	}
+
+	/** {@link UserLanguage#wordsPacketList} */
+	public void setWordsPacketList(List<UserWordsPacket> wordsPacketList) {
+		this.wordsPacketList = wordsPacketList;
 	}
 	
 	
