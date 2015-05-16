@@ -7,12 +7,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import victor.com.multiwords.localEntity.LocalEntry;
+
 /**
  * @author WRosinski<br/>
  *<br/>
  */
 @Entity
-public class Entry extends UserEntity{
+public class Entry extends BaseEntity{
 
 	/** data i godzina wejscia - zalogowania */
 	private Date entryDate;
@@ -38,13 +40,11 @@ public class Entry extends UserEntity{
 	/** jezyk na ktorego dotyczy wejscie */
 	private UserLanguage userLanguage;
 	
+	//********************************************
+	//*************  CONTRUCTORS  ****************
+	//********************************************
 	
-	//********************************************
-	//**********  GETTERS & SETTERS  *************
-	//********************************************
 	public Entry(){
-		entryDate=new Date();
-		exitDate=new Date();
 		wordsPerDay=0;
 		knownWordsNumber=0;
 		lernedWordsNumber=0;
@@ -53,6 +53,38 @@ public class Entry extends UserEntity{
 		wholeKnownWordsNumber=0;
 		wholeLernedWordsNumber=0;
 	}
+	
+	public Entry(Entry entry){
+		super(entry);
+		this.entryDate=entry.getEntryDate();
+		this.exitDate=entry.getExitDate();
+		this.wordsPerDay=entry.getWordsPerDay();
+		this.knownWordsNumber=entry.getKnownWordsNumber();
+		this.lernedWordsNumber=entry.getLernedWordsNumber();
+		this.testedWordsNumber=entry.getTestedWordsNumber();
+		this.correctedTestedWordsNumber=entry.getCorrectedTestedWordsNumber();
+		this.wholeKnownWordsNumber=entry.getWholeKnownWordsNumber();
+		this.wholeLernedWordsNumber=entry.getWholeLernedWordsNumber();
+	}
+	
+	public Entry(LocalEntry entry){
+		super(entry);
+		this.entryDate=entry.getEntryDate();
+		this.exitDate=entry.getExitDate();
+		this.wordsPerDay=entry.getWordsPerDay();
+		this.knownWordsNumber=entry.getKnownWordsNumber();
+		this.lernedWordsNumber=entry.getLernedWordsNumber();
+		this.testedWordsNumber=entry.getTestedWordsNumber();
+		this.correctedTestedWordsNumber=entry.getCorrectedTestedWordsNumber();
+		this.wholeKnownWordsNumber=entry.getWholeKnownWordsNumber();
+		this.wholeLernedWordsNumber=entry.getWholeLernedWordsNumber();
+	}
+	
+	//********************************************
+	//**********  GETTERS & SETTERS  *************
+	//********************************************
+
+	
 	/** {@link BaseEntity#id} */
 	@Id
 	@GeneratedValue

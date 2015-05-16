@@ -8,12 +8,14 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import victor.com.multiwords.localEntity.LocalUserWordsPacket;
+
 /**
  * @author WRosinski<br/>
  *Zestaw wyrazow uzytkownika<br/>
  */
 @Entity
-public class UserWordsPacket extends UserEntity{
+public class UserWordsPacket extends BaseEntity{
 	
 	/** nazwa zestawu uzytkownika */
 	private String name;
@@ -34,7 +36,29 @@ public class UserWordsPacket extends UserEntity{
 	/** wyraz obcy */
 	private Word foreignWord;
 	
+	//********************************************
+	//*************  CONTRUCTORS  ****************
+	//********************************************
 	
+	public UserWordsPacket(){
+		name="";
+		allKnowns=false;
+		anyKnown=false;
+	}
+	
+	public UserWordsPacket(UserWordsPacket userWordsPacket){
+		super(userWordsPacket);
+		this.name=userWordsPacket.getName();
+		this.allKnowns=userWordsPacket.getAllKnowns();
+		this.anyKnown=userWordsPacket.getAnyKnown();
+	}
+	
+	public UserWordsPacket(LocalUserWordsPacket userWordsPacket){
+		super(userWordsPacket);
+		this.name=userWordsPacket.getName();
+		this.allKnowns=userWordsPacket.getAllKnowns();
+		this.anyKnown=userWordsPacket.getAnyKnown();
+	}
 	
 	
 	//********************************************
@@ -46,11 +70,7 @@ public class UserWordsPacket extends UserEntity{
 	public Long getId() {
 		return id;
 	}
-	public UserWordsPacket(){
-		name="";
-		allKnowns=false;
-		anyKnown=false;
-	}
+
 
 	/** {@link UserWordsPacket#name} */
 	public String getName() {

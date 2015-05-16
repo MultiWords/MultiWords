@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import victor.com.multiwords.localEntity.LocalPaymentType;
+
 /**
  * @author WRosinski<br/>
  *<br/>
@@ -16,6 +18,21 @@ public class PaymentType extends BaseEntity{
 	
 	//************  RELATIONS  *******************
 
+	//********************************************
+	//*************  CONTRUCTORS  ****************
+	//********************************************
+	public PaymentType(){}
+	
+	public PaymentType(PaymentType paymentType){
+		super(paymentType);
+		this.name=paymentType.getName();
+	}
+	
+	public PaymentType(LocalPaymentType paymentType){
+		super(paymentType);
+		this.name=paymentType.getName();
+	}
+	
 	//********************************************
 	//**********  GETTERS & SETTERS  *************
 	//********************************************

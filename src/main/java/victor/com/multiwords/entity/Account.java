@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import victor.com.multiwords.localEntity.LocalAccount;
+
 /**
  * @author WRosinski<br/>
  *<br/>
@@ -26,6 +28,30 @@ public class Account extends BaseEntity{
 	
 	//************  RELATIONS  *******************
 
+	//********************************************
+	//*************  CONTRUCTORS  ****************
+	//********************************************
+	
+	public Account() {	}
+	
+	public Account(LocalAccount account){
+		super(account);
+		this.name=account.getName();
+		this.pirce=account.getPirce();
+		this.dayLimit=account.getDayLimit();
+		this.monthLimit=account.getMonthLimit();
+		this.yearLimit=account.getYearLimit();
+	}
+	
+	public Account(Account account){
+		super(account);
+		this.name=account.getName();
+		this.pirce=account.getPirce();
+		this.dayLimit=account.getDayLimit();
+		this.monthLimit=account.getMonthLimit();
+		this.yearLimit=account.getYearLimit();
+	}
+	
 	//********************************************
 	//**********  GETTERS & SETTERS  *************
 	//********************************************

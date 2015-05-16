@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import victor.com.multiwords.localEntity.LocalWordsPacket;
+
 /**
  * @author WRosinski<br/>
  *Zestaw wyrazow<br/>
@@ -21,6 +23,22 @@ public class WordsPacket extends BaseEntity{
 	/** jezyk do ktorego jest przypisany zestaw */
 	private Language language;
 	
+	
+	//********************************************
+	//*************  CONTRUCTORS  ****************
+	//********************************************
+	
+	public WordsPacket(){}
+	
+	public WordsPacket(WordsPacket wordsPacket){
+		super(wordsPacket);
+		this.name=wordsPacket.getName();
+	}
+	
+	public WordsPacket(LocalWordsPacket wordsPacket){
+		super(wordsPacket);
+		this.name=wordsPacket.getName();
+	}
 	
 	//********************************************
 	//**********  GETTERS & SETTERS  *************

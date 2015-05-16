@@ -7,7 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.PrimaryKeyJoinColumn;
+
+import victor.com.multiwords.localEntity.LocalLanguage;
 
 /**
  * @author WRosinski<br/>
@@ -25,8 +26,21 @@ public class Language extends BaseEntity{
 	/** klawiatura przypisana do jezyka */
 	private Keyboard keyboard;
 	
+	//********************************************
+	//*************  CONTRUCTORS  ****************
+	//********************************************
 	
+	public Language() {}
 	
+	public Language(Language language) {
+		super(language);
+		this.name=language.getName();
+	}
+
+	public Language(LocalLanguage language) {
+		super(language);
+		this.name=language.getName();
+	}
 
 	//********************************************
 	//**********  GETTERS & SETTERS  *************

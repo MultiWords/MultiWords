@@ -1,20 +1,20 @@
 package victor.com.multiwords.entity;
 
-import java.awt.Image;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import victor.com.multiwords.localEntity.LocalWordsPacketItem;
+
 /**
  * @author <b>WRosinski</b><br/>
  *<br/>
  */
 @Entity
-public class WordsPacketItem extends UserEntity{
+public class WordsPacketItem extends BaseEntity{
 
 	/** dodatkowy opis na elemencie zestwu wyrazow */
 	private String description;
@@ -35,10 +35,10 @@ public class WordsPacketItem extends UserEntity{
 	/** zestaw do ktorego zostal wyraz przypisany */
 	private UserWordsPacket userWordsPacket;
 	
+	//********************************************
+	//*************  CONTRUCTORS  ****************
+	//********************************************
 	
-	//********************************************
-	//**********  GETTERS & SETTERS  *************
-	//********************************************
 	public WordsPacketItem(){
 		description=null;
 		example=null;
@@ -48,6 +48,33 @@ public class WordsPacketItem extends UserEntity{
 		image=null;
 		audio=null;
 	}
+	
+	public WordsPacketItem(WordsPacketItem wordsPacketItem){
+		super(wordsPacketItem);
+		this.description=wordsPacketItem.getDescription();
+		this.example=wordsPacketItem.getExample();
+		this.known=wordsPacketItem.getKnown();
+		this.lerningLevel=wordsPacketItem.getLerningLevel();
+		this.repeatingDate=wordsPacketItem.getRepeatingDate();
+		this.image=wordsPacketItem.getImage();
+		this.audio=wordsPacketItem.getAudio();
+	}
+	
+	public WordsPacketItem(LocalWordsPacketItem wordsPacketItem){
+		super(wordsPacketItem);
+		this.description=wordsPacketItem.getDescription();
+		this.example=wordsPacketItem.getExample();
+		this.known=wordsPacketItem.getKnown();
+		this.lerningLevel=wordsPacketItem.getLerningLevel();
+		this.repeatingDate=wordsPacketItem.getRepeatingDate();
+		this.image=wordsPacketItem.getImage();
+		this.audio=wordsPacketItem.getAudio();
+	}
+	
+	//********************************************
+	//**********  GETTERS & SETTERS  *************
+	//********************************************
+
 	/** {@link BaseEntity#id} */
 	@Id
 	@GeneratedValue

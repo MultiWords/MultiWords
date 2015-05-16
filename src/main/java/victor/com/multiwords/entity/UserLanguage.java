@@ -8,12 +8,14 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import victor.com.multiwords.localEntity.LocalUserLanguage;
+
 /**
  * @author WRosinski<br/>
  *<br/>
  */
 @Entity
-public class UserLanguage extends UserEntity{
+public class UserLanguage extends BaseEntity{
 
 	/** nazwa jezyka uzytkownika - uzytkownik moze nazwac jezyk po swojemu */
 	private String name;
@@ -40,8 +42,41 @@ public class UserLanguage extends UserEntity{
 	/** lista zestawow wyrazow przypisana do jezyka */
 	private List<UserWordsPacket> wordsPacketList;
 	
+	//********************************************
+	//*************  CONTRUCTORS  ****************
+	//********************************************
 	
+	public UserLanguage(){
+		name="";
+		wordsPerDay=10;
+		repeatNumber=5;
+		stepNumber=10;
+		arrears=0;
+		knownWordsNumber=0;
+		lernedWordsNumber=0;
+	}
 	
+	public UserLanguage(UserLanguage userLanguage){
+		super(userLanguage);
+		this.name=userLanguage.getName();
+		this.wordsPerDay=userLanguage.getWordsPerDay();
+		this.repeatNumber=userLanguage.getRepeatNumber();
+		this.stepNumber=userLanguage.getStepNumber();
+		this.arrears=userLanguage.getArrears();
+		this.knownWordsNumber=userLanguage.getKnownWordsNumber();
+		this.lernedWordsNumber=userLanguage.getLernedWordsNumber();
+	}
+	
+	public UserLanguage(LocalUserLanguage userLanguage){
+		super(userLanguage);
+		this.name=userLanguage.getName();
+		this.wordsPerDay=userLanguage.getWordsPerDay();
+		this.repeatNumber=userLanguage.getRepeatNumber();
+		this.stepNumber=userLanguage.getStepNumber();
+		this.arrears=userLanguage.getArrears();
+		this.knownWordsNumber=userLanguage.getKnownWordsNumber();
+		this.lernedWordsNumber=userLanguage.getLernedWordsNumber();
+	}
 	
 	//********************************************
 	//**********  GETTERS & SETTERS  *************
@@ -52,15 +87,7 @@ public class UserLanguage extends UserEntity{
 	public Long getId() {
 		return id;
 	}
-	public UserLanguage(){
-		name="";
-		wordsPerDay=10;
-		repeatNumber=5;
-		stepNumber=10;
-		arrears=0;
-		knownWordsNumber=0;
-		lernedWordsNumber=0;
-	}
+
 
 	/** {@link UserLanguage#name} */
 	public String getName() {

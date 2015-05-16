@@ -3,18 +3,18 @@ package victor.com.multiwords.entity;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+
+import victor.com.multiwords.localEntity.LocalUser;
 
 @NamedQuery(name="user_maxId", query="SELECT MAX(id) FROM User")
 @Entity
 @Table(name="MultiWordsUser")
-public class User extends UserEntity{
+public class User extends BaseEntity{
 
 	/** imie uzytkownika */
 	private String name;
@@ -43,28 +43,36 @@ public class User extends UserEntity{
 	/** lista platnosci */
 	private List<Payment> paymentList;
 	
+	//********************************************
+	//*************  CONTRUCTORS  ****************
+	//********************************************
 	
 	public User(){}
 	
-	
-	public User clone() {
-		try {
-			return (User) super.clone();
-		} catch (CloneNotSupportedException e) {
-			throw new RuntimeException(e);
-		}
-//		User cloned=new User();
-//		cloned.id=this.id;
-//		cloned.name=this.name;
-//		cloned.surname=this.surname;
-//		cloned.login=this.login;
-//		cloned.password=this.password;
-//		cloned.email=this.email;
-//		cloned.tel=this.tel;
-//		cloned.helpQuestion=this.helpQuestion;
-//		cloned.helpAnswer=this.helpAnswer;
-//		return  cloned;
+	public User(User user){
+		super(user);
+		this.name=user.getName();
+		this.surname=user.getSurname();
+		this.login=user.getLogin();
+		this.password=user.getPassword();
+		this.email=user.getEmail();
+		this.tel=user.getTel();
+		this.helpQuestion=user.getHelpQuestion();
+		this.helpAnswer=user.getHelpAnswer();
 	}
+
+	public User(LocalUser user){
+		super(user);
+		this.name=user.getName();
+		this.surname=user.getSurname();
+		this.login=user.getLogin();
+		this.password=user.getPassword();
+		this.email=user.getEmail();
+		this.tel=user.getTel();
+		this.helpQuestion=user.getHelpQuestion();
+		this.helpAnswer=user.getHelpAnswer();
+	}
+	
 	
 	//********************************************
 	//**********  GETTERS & SETTERS  *************

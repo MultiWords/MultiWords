@@ -7,12 +7,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import victor.com.multiwords.localEntity.LocalUserAccount;
+
 /**
  * @author WRosinski<br/>
  *<br/>
  */
 @Entity
-public class UserAccount extends UserEntity{
+public class UserAccount extends BaseEntity{
 	/** data aktywowania konta */
 	private Date openAccountDate;
 	/** data waznosci konta */
@@ -28,8 +30,25 @@ public class UserAccount extends UserEntity{
 	/** platnosc, poprzez ktora konto zostalo zakupione */
 	private Payment payment;
 	
+	//********************************************
+	//*************  CONTRUCTORS  ****************
+	//********************************************
 	
+	public UserAccount(){}
 	
+	public UserAccount(UserAccount userAccount){
+		super(userAccount);
+		this.openAccountDate=userAccount.getOpenAccountDate();
+		this.closeAccountDate=userAccount.getCloseAccountDate();
+		this.confirm=userAccount.isConfirm();
+	}
+	
+	public UserAccount(LocalUserAccount userAccount){
+		super(userAccount);
+		this.openAccountDate=userAccount.getOpenAccountDate();
+		this.closeAccountDate=userAccount.getCloseAccountDate();
+		this.confirm=userAccount.isConfirm();
+	}
 	
 	//********************************************
 	//**********  GETTERS & SETTERS  *************

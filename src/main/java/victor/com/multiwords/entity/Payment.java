@@ -8,12 +8,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import victor.com.multiwords.localEntity.LocalPayment;
+
 /**
  * @author WRosinski<br/>
  *<br/>
  */
 @Entity
-public class Payment extends UserEntity{
+public class Payment extends BaseEntity{
 
 	/** data platnosci */
 	private Date paymentDate;
@@ -32,8 +34,27 @@ public class Payment extends UserEntity{
 	/** informacja, ktorej aplikacji dotyczy platnosc */
 	private ApplicationSource appSource;
 	
+	//********************************************
+	//*************  CONTRUCTORS  ****************
+	//********************************************
 	
+	public Payment(){}
 	
+	public Payment(Payment payment){
+		super(payment);
+		this.paymentDate=payment.getPaymentDate();
+		this.amount=payment.getAmount();
+		this.title=payment.getTitle();
+		this.bankAccountNumber=this.getBankAccountNumber();
+	}
+	
+	public Payment(LocalPayment payment){
+		super(payment);
+		this.paymentDate=payment.getPaymentDate();
+		this.amount=payment.getAmount();
+		this.title=payment.getTitle();
+		this.bankAccountNumber=this.getBankAccountNumber();
+	}
 	
 	//********************************************
 	//**********  GETTERS & SETTERS  *************

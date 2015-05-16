@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import victor.com.multiwords.localEntity.LocalApplicationSource;
+
 /**
  * @author WRosinski<br/>
  *<br/>
@@ -16,6 +18,22 @@ public class ApplicationSource extends BaseEntity{
 
 
 	//************  RELATIONS  *******************
+	
+	//********************************************
+	//*************  CONTRUCTORS  ****************
+	//********************************************
+	
+	public ApplicationSource(){}
+	
+	public ApplicationSource(ApplicationSource applicationSource){
+		super(applicationSource);
+		this.name=applicationSource.getName();
+	}
+	
+	public ApplicationSource(LocalApplicationSource applicationSource){
+		super(applicationSource);
+		this.name=applicationSource.getName();
+	}
 
 	//********************************************
 	//**********  GETTERS & SETTERS  *************

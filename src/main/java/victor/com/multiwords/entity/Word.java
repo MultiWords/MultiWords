@@ -1,11 +1,11 @@
 package victor.com.multiwords.entity;
 
-import java.awt.Image;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import victor.com.multiwords.localEntity.LocalWord;
 
 /**
  * @author <b>WRosinski</b><br/>
@@ -31,6 +31,32 @@ public class Word extends BaseEntity{
 	/** jezyk, do ktorego nalezy wyraz */
 	private Language language;
 	
+	
+	//********************************************
+	//*************  CONTRUCTORS  ****************
+	//********************************************
+	
+	public Word(){}
+	
+	public Word(Word word){
+		super(word);
+		this.word=word.getWord();
+		this.meaning=word.getMeaning();
+		this.pronunciation=word.getPronunciation();
+		this.example=word.getExample();
+		this.image=word.getImage();
+		this.audio=word.getAudio();
+	}
+	
+	public Word(LocalWord word){
+		super(word);
+		this.word=word.getWord();
+		this.meaning=word.getMeaning();
+		this.pronunciation=word.getPronunciation();
+		this.example=word.getExample();
+		this.image=word.getImage();
+		this.audio=word.getAudio();
+	}
 	
 	//********************************************
 	//**********  GETTERS & SETTERS  *************
