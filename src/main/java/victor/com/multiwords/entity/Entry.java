@@ -3,9 +3,8 @@ package victor.com.multiwords.entity;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 
 import victor.com.multiwords.localEntity.LocalEntry;
 
@@ -14,6 +13,7 @@ import victor.com.multiwords.localEntity.LocalEntry;
  *<br/>
  */
 @Entity
+@SequenceGenerator(name = "sequence_gen", initialValue=1, allocationSize=1, sequenceName="entry_sequence")
 public class Entry extends BaseEntity{
 
 	/** data i godzina wejscia - zalogowania */
@@ -38,7 +38,22 @@ public class Entry extends BaseEntity{
 	
 	//************  RELATIONS  *******************
 	/** jezyk na ktorego dotyczy wejscie */
+	@ManyToOne
 	private UserLanguage userLanguage;
+	
+	public void clone(LocalEntry entry){
+		super.clone(entry);
+		this.entryDate=entry.getEntryDate();
+		this.exitDate=entry.getExitDate();
+		this.wordsPerDay=entry.getWordsPerDay();
+		this.knownWordsNumber=entry.getKnownWordsNumber();
+		this.lernedWordsNumber=entry.getLernedWordsNumber();
+		this.testedWordsNumber=entry.getTestedWordsNumber();
+		this.correctedTestedWordsNumber=entry.getCorrectedTestedWordsNumber();
+		this.wholeKnownWordsNumber=entry.getWholeKnownWordsNumber();
+		this.wholeLernedWordsNumber=entry.getWholeLernedWordsNumber();
+	}
+	
 	
 	//********************************************
 	//*************  CONTRUCTORS  ****************
@@ -83,14 +98,6 @@ public class Entry extends BaseEntity{
 	//********************************************
 	//**********  GETTERS & SETTERS  *************
 	//********************************************
-
-	
-	/** {@link BaseEntity#id} */
-	@Id
-	@GeneratedValue
-	public Long getId() {
-		return id;
-	}
 
 	/** {@link Entry#entryDate} */
 	public Date getEntryDate() {

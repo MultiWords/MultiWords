@@ -19,4 +19,9 @@ public class WordsPacketItemService {
 	private WordsPacketItemDAO wordsPacketItemDAO;
 	@Autowired
 	private LocalWordsPacketItemDAO localWordsPacketItemDAO;
+	
+	public boolean checkConnection(){
+		return wordsPacketItemDAO.checkConnection();
+	}
+	
 }

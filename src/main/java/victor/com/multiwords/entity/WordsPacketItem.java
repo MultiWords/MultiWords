@@ -3,9 +3,8 @@ package victor.com.multiwords.entity;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 
 import victor.com.multiwords.localEntity.LocalWordsPacketItem;
 
@@ -14,6 +13,7 @@ import victor.com.multiwords.localEntity.LocalWordsPacketItem;
  *<br/>
  */
 @Entity
+@SequenceGenerator(name = "sequence_gen", initialValue=1, allocationSize=1, sequenceName="words_packet_item_sequence")
 public class WordsPacketItem extends BaseEntity{
 
 	/** dodatkowy opis na elemencie zestwu wyrazow */
@@ -33,6 +33,7 @@ public class WordsPacketItem extends BaseEntity{
 	
 	//************  RELATIONS  *******************
 	/** zestaw do ktorego zostal wyraz przypisany */
+	@ManyToOne
 	private UserWordsPacket userWordsPacket;
 	
 	//********************************************
@@ -75,12 +76,7 @@ public class WordsPacketItem extends BaseEntity{
 	//**********  GETTERS & SETTERS  *************
 	//********************************************
 
-	/** {@link BaseEntity#id} */
-	@Id
-	@GeneratedValue
-	public Long getId() {
-		return id;
-	}
+	
 	/** {@link WordsPacketItem#description} */
 	public String getDescription() {
 		return description;

@@ -3,6 +3,7 @@ package victor.com.multiwords.localEntity;
 import java.math.BigDecimal;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -16,10 +17,13 @@ import victor.com.multiwords.entity.Account;
 @Table(name="Account")
 public class LocalAccount extends LocalBaseEntity{
 
+	@Id
+	@GeneratedValue
+	private Long id;
 	/** nazwa konta */
 	private String name;
 	/** cena konta */
-	private BigDecimal pirce;
+	private BigDecimal price;
 	/** liczba dni waznosci konta */
 	private Integer dayLimit;
 	/** liczba miesiecy waznosci konta */
@@ -38,7 +42,7 @@ public class LocalAccount extends LocalBaseEntity{
 	public LocalAccount(LocalAccount account){
 		super(account);
 		this.name=account.getName();
-		this.pirce=account.getPirce();
+		this.price=account.getPrice();
 		this.dayLimit=account.getDayLimit();
 		this.monthLimit=account.getMonthLimit();
 		this.yearLimit=account.getYearLimit();
@@ -47,7 +51,7 @@ public class LocalAccount extends LocalBaseEntity{
 	public LocalAccount(Account account){
 		super(account);  
 		this.name=account.getName();
-		this.pirce=account.getPirce();
+		this.price=account.getPrice();
 		this.dayLimit=account.getDayLimit();
 		this.monthLimit=account.getMonthLimit();
 		this.yearLimit=account.getYearLimit();
@@ -56,11 +60,19 @@ public class LocalAccount extends LocalBaseEntity{
 	//********************************************
 	//**********  GETTERS & SETTERS  *************
 	//********************************************
-	/** {@link LocalBaseEntity#id} */
-	@Id
+
+	/* (non-Javadoc) @see victor.com.multiwords.localEntity.LocalBaseEntity#setId(java.lang.Long) */
+	@Override
+	public void setId(Long id) {
+		this.id=id;
+	}
+
+	/* (non-Javadoc) @see victor.com.multiwords.localEntity.LocalBaseEntity#getId() */
+	@Override
 	public Long getId() {
 		return id;
 	}
+
 	/** {@link LocalAccount#name} */
 	public String getName() {
 		return name;
@@ -69,14 +81,17 @@ public class LocalAccount extends LocalBaseEntity{
 	public void setName(String name) {
 		this.name = name;
 	}
-	/** {@link LocalAccount#pirce} */
-	public BigDecimal getPirce() {
-		return pirce;
+	
+	/** {@link LocalAccount#price} */
+	public BigDecimal getPrice() {
+		return price;
 	}
-	/** {@link LocalAccount#pirce} */
-	public void setPirce(BigDecimal pirce) {
-		this.pirce = pirce;
+
+	/** {@link LocalAccount#price} */
+	public void setPrice(BigDecimal price) {
+		this.price = price;
 	}
+
 	/** {@link LocalAccount#dayLimit} */
 	public Integer getDayLimit() {
 		return dayLimit;
@@ -101,5 +116,7 @@ public class LocalAccount extends LocalBaseEntity{
 	public void setYearLimit(Integer yearLimit) {
 		this.yearLimit = yearLimit;
 	}
+
+
 	
 }

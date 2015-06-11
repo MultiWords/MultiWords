@@ -2,9 +2,6 @@ package victor.com.multiwords.localEntity;
 
 import java.util.Date;
 
-import javax.annotation.Generated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 import victor.com.multiwords.entity.BaseEntity;
@@ -16,8 +13,7 @@ import victor.com.multiwords.entity.BaseEntity;
 @MappedSuperclass
 public abstract class LocalBaseEntity {
 	
-	/** id */
-	protected Long id;
+
 	/** id odpowiednika na centralnej bazie danych */
 	protected Long sourceId;
 	/** data utworzenia obiektu */
@@ -31,14 +27,15 @@ public abstract class LocalBaseEntity {
 	
 	public LocalBaseEntity(){}
 	
-	public LocalBaseEntity (BaseEntity entity){
-		this.id=entity.getId();
+	public <T extends BaseEntity> LocalBaseEntity (T entity){
+		this.setSourceId(entity.getId());
 		this.created=entity.getCreated();
 		this.updated=entity.getUpdated();
 	}
 	
-	public LocalBaseEntity (LocalBaseEntity entity){
-		this.id=entity.getId();
+	public <T extends LocalBaseEntity>LocalBaseEntity (T entity){
+		this.setId(entity.getId());
+		this.setSourceId(entity.getSourceId());
 		this.created=entity.getCreated();
 		this.updated=entity.getUpdated();
 	}
@@ -47,10 +44,9 @@ public abstract class LocalBaseEntity {
 	//**********  GETTERS & SETTERS  *************
 	//********************************************
 
-	/** {@link LocalBaseEntity#id} */
-	public void setId(Long id) {
-		this.id = id;
-	}
+	public abstract void setId(Long id);
+	public abstract Long getId();
+	
 	/** {@link LocalBaseEntity#created} */
 	public Date getCreated() {
 		return created;
@@ -67,9 +63,15 @@ public abstract class LocalBaseEntity {
 	public void setUpdated(Date updated) {
 		this.updated = updated;
 	}
-	/** {@link LocalBaseEntity#id} */
-	public Long getId() {
-		return id;
+
+	/** {@link LocalBaseEntity#sourceId} */
+	public Long getSourceId() {
+		return sourceId;
+	}
+
+	/** {@link LocalBaseEntity#sourceId} */
+	public void setSourceId(Long sourceId) {
+		this.sourceId = sourceId;
 	}
 	
 }

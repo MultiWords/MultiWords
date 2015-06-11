@@ -3,6 +3,7 @@ package victor.com.multiwords.localEntity;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -16,7 +17,10 @@ import victor.com.multiwords.entity.Entry;
 @Entity
 @Table(name="Entry")
 public class LocalEntry extends LocalBaseEntity{
-
+	@Id
+	@GeneratedValue
+	private Long id;
+	
 	/** data i godzina wejscia - zalogowania */
 	private Date entryDate;
 	/** data i godzina wyjscia - wylogowania */
@@ -39,6 +43,7 @@ public class LocalEntry extends LocalBaseEntity{
 	
 	//************  RELATIONS  *******************
 	/** jezyk na ktorego dotyczy wejscie */
+	@ManyToOne
 	private LocalUserLanguage userLanguage;
 	
 	//********************************************
@@ -84,11 +89,19 @@ public class LocalEntry extends LocalBaseEntity{
 	//********************************************
 	//**********  GETTERS & SETTERS  *************
 	//********************************************
-	/** {@link LocalBaseEntity#id} */
-	@Id
+
+	/* (non-Javadoc) @see victor.com.multiwords.localEntity.LocalBaseEntity#setId(java.lang.Long) */
+	@Override
+	public void setId(Long id) {
+		this.id=id;
+	}
+
+	/* (non-Javadoc) @see victor.com.multiwords.localEntity.LocalBaseEntity#getId() */
+	@Override
 	public Long getId() {
 		return id;
 	}
+	
 
 	/** {@link LocalEntry#entryDate} */
 	public Date getEntryDate() {

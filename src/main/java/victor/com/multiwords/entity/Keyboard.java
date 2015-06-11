@@ -1,8 +1,7 @@
 package victor.com.multiwords.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 import victor.com.multiwords.localEntity.LocalKeyboard;
 
@@ -11,8 +10,13 @@ import victor.com.multiwords.localEntity.LocalKeyboard;
  *<br/>
  */
 @Entity
+@SequenceGenerator(name = "sequence_gen", initialValue=1, allocationSize=1, sequenceName="keyboard_sequence")
 public class Keyboard extends BaseEntity{
 	
+	
+	public void clone(LocalKeyboard keyboard){
+		super.clone(keyboard);
+	}
 	
 	//********************************************
 	//*************  CONTRUCTORS  ****************
@@ -30,10 +34,5 @@ public class Keyboard extends BaseEntity{
 	//********************************************
 	//**********  GETTERS & SETTERS  *************
 	//********************************************
-	/** {@link BaseEntity#id} */
-	@Id
-	@GeneratedValue
-	public Long getId() {
-		return id;
-	}
+	
 }

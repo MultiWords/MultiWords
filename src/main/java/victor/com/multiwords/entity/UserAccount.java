@@ -3,9 +3,8 @@ package victor.com.multiwords.entity;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 
 import victor.com.multiwords.localEntity.LocalUserAccount;
 
@@ -14,7 +13,9 @@ import victor.com.multiwords.localEntity.LocalUserAccount;
  *<br/>
  */
 @Entity
+@SequenceGenerator(name = "sequence_gen", initialValue=1, allocationSize=1, sequenceName="user_account_sequence")
 public class UserAccount extends BaseEntity{
+	
 	/** data aktywowania konta */
 	private Date openAccountDate;
 	/** data waznosci konta */
@@ -24,11 +25,21 @@ public class UserAccount extends BaseEntity{
 	
 	//************  RELATIONS  *******************
 	/** wlasciciel konta */
+	@ManyToOne
 	private User user;
 	/** konto - rodzaj konta przypisany do uzytkownika */
+	@ManyToOne
 	private Account account;
 	/** platnosc, poprzez ktora konto zostalo zakupione */
+	@ManyToOne
 	private Payment payment;
+	
+	public void clone(LocalUserAccount userAccount){
+		super.clone(userAccount);
+		this.openAccountDate=userAccount.getOpenAccountDate();
+		this.closeAccountDate=userAccount.getCloseAccountDate();
+		this.confirm=userAccount.isConfirm();
+	}
 	
 	//********************************************
 	//*************  CONTRUCTORS  ****************
@@ -53,12 +64,7 @@ public class UserAccount extends BaseEntity{
 	//********************************************
 	//**********  GETTERS & SETTERS  *************
 	//********************************************
-	/** {@link BaseEntity#id} */
-	@Id
-	@GeneratedValue
-	public Long getId() {
-		return id;
-	}
+	
 	/** {@link UserAccount#openAccountDate} */
 	public Date getOpenAccountDate() {
 		return openAccountDate;

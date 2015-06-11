@@ -3,10 +3,9 @@ package victor.com.multiwords.entity;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
 import victor.com.multiwords.localEntity.LocalUserLanguage;
 
@@ -15,8 +14,10 @@ import victor.com.multiwords.localEntity.LocalUserLanguage;
  *<br/>
  */
 @Entity
+@SequenceGenerator(name = "sequence_gen", initialValue=1, allocationSize=1, sequenceName="user_language_sequence")
 public class UserLanguage extends BaseEntity{
 
+	
 	/** nazwa jezyka uzytkownika - uzytkownik moze nazwac jezyk po swojemu */
 	private String name;
 	/** liczba wyrazow do nauki dziennie */
@@ -34,13 +35,28 @@ public class UserLanguage extends BaseEntity{
 	
 	//************  RELATIONS  *******************
 	/** wlasciciel jezyka - osoba uczaca sie tego jezyka */
+	@ManyToOne
 	private User user;
 	/** jezyk do ktorego nalezy jezyk uzytkownika */
+	@ManyToOne
 	private Language language;
 	/** lista logowan - wejsc */
+	@OneToMany(mappedBy="userLanguage")
 	private List<Entry> entryList;
 	/** lista zestawow wyrazow przypisana do jezyka */
+	@OneToMany(mappedBy="userLanguage")
 	private List<UserWordsPacket> wordsPacketList;
+	
+	public void clone(LocalUserLanguage userLanguage){
+		super.clone(userLanguage);
+		this.name=userLanguage.getName();
+		this.wordsPerDay=userLanguage.getWordsPerDay();
+		this.repeatNumber=userLanguage.getRepeatNumber();
+		this.stepNumber=userLanguage.getStepNumber();
+		this.arrears=userLanguage.getArrears();
+		this.knownWordsNumber=userLanguage.getKnownWordsNumber();
+		this.lernedWordsNumber=userLanguage.getLernedWordsNumber();
+	}
 	
 	//********************************************
 	//*************  CONTRUCTORS  ****************
@@ -81,12 +97,6 @@ public class UserLanguage extends BaseEntity{
 	//********************************************
 	//**********  GETTERS & SETTERS  *************
 	//********************************************
-	/** {@link BaseEntity#id} */
-	@Id
-	@GeneratedValue
-	public Long getId() {
-		return id;
-	}
 
 
 	/** {@link UserLanguage#name} */

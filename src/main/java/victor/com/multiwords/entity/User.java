@@ -3,17 +3,17 @@ package victor.com.multiwords.entity;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import victor.com.multiwords.localEntity.LocalUser;
 
-@NamedQuery(name="user_maxId", query="SELECT MAX(id) FROM User")
+
 @Entity
 @Table(name="MultiWordsUser")
+@SequenceGenerator(name = "sequence_gen", initialValue=1, allocationSize=1, sequenceName="user_sequence")
 public class User extends BaseEntity{
 
 	/** imie uzytkownika */
@@ -35,13 +35,29 @@ public class User extends BaseEntity{
 	
 	//************  RELATIONS  *******************
 	/** lista aktywnych  */
+	@OneToMany(mappedBy="user")
 	private List<UserAccount> accountList;
 	/** jezyk ojczysty */
+	@ManyToOne
 	private Language ownLanguage;
 	/** lista uczonych jezykow */
+	@OneToMany(mappedBy="user")
 	private List<UserLanguage> languageList;
 	/** lista platnosci */
+	@OneToMany(mappedBy="user")
 	private List<Payment> paymentList;
+	
+	
+	public void clone(LocalUser user){
+		super.clone(user);
+		this.name=user.getName();
+		this.surname=user.getSurname();
+		this.login=user.getLogin();
+		this.password=user.getPassword();
+		this.email=user.getEmail();
+		this.helpQuestion=user.getHelpQuestion();
+		this.helpAnswer=user.getHelpAnswer();
+	}
 	
 	//********************************************
 	//*************  CONTRUCTORS  ****************
@@ -77,12 +93,7 @@ public class User extends BaseEntity{
 	//********************************************
 	//**********  GETTERS & SETTERS  *************
 	//********************************************
-	/** {@link BaseEntity#id} */
-	@Id
-//	@GeneratedValue
-	public Long getId() {
-		return id;
-	}
+	
 	/** {@link User#name} */
 	public String getName() {
 		return name;

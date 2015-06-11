@@ -1,8 +1,7 @@
 package victor.com.multiwords.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 import victor.com.multiwords.localEntity.LocalApplicationSource;
 
@@ -11,6 +10,7 @@ import victor.com.multiwords.localEntity.LocalApplicationSource;
  *<br/>
  */
 @Entity
+@SequenceGenerator(name = "sequence_gen", initialValue=1, allocationSize=1, sequenceName="app_source_sequence")
 public class ApplicationSource extends BaseEntity{
 	
 	/** nazwa aplikacji z ktorej pochodzi platnosc */
@@ -18,6 +18,12 @@ public class ApplicationSource extends BaseEntity{
 
 
 	//************  RELATIONS  *******************
+	
+	
+	public void clone(LocalApplicationSource appSource){
+		super.clone(appSource);
+		this.name=appSource.getName();
+	}
 	
 	//********************************************
 	//*************  CONTRUCTORS  ****************
@@ -38,12 +44,6 @@ public class ApplicationSource extends BaseEntity{
 	//********************************************
 	//**********  GETTERS & SETTERS  *************
 	//********************************************
-	/** {@link BaseEntity#id} */
-	@Id
-	@GeneratedValue
-	public Long getId() {
-		return id;
-	}
 	/** {@link ApplicationSource#name} */
 	public String getName() {
 		return name;
@@ -53,5 +53,6 @@ public class ApplicationSource extends BaseEntity{
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	
 }

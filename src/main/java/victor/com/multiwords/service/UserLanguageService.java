@@ -20,4 +20,8 @@ public class UserLanguageService {
 	@Autowired
 	private LocalUserLanguageDAO localUserLanguageDAO;
 	
+	public boolean checkConnection(){
+		return userLanguageDAO.checkConnection();
+	}
+	
 }

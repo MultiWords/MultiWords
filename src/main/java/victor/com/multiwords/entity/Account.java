@@ -3,8 +3,7 @@ package victor.com.multiwords.entity;
 import java.math.BigDecimal;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 import victor.com.multiwords.localEntity.LocalAccount;
 
@@ -13,12 +12,14 @@ import victor.com.multiwords.localEntity.LocalAccount;
  *<br/>
  */
 @Entity
+@SequenceGenerator(name = "sequence_gen", initialValue=1, allocationSize=1, sequenceName="account_sequence")
 public class Account extends BaseEntity{
+
 
 	/** nazwa konta */
 	private String name;
 	/** cena konta */
-	private BigDecimal pirce;
+	private BigDecimal price;
 	/** liczba dni waznosci konta */
 	private Integer dayLimit;
 	/** liczba miesiecy waznosci konta */
@@ -28,6 +29,17 @@ public class Account extends BaseEntity{
 	
 	//************  RELATIONS  *******************
 
+	
+	
+	public void clone(LocalAccount account){
+		super.clone(account);
+		this.name=account.getName();
+		this.price=account.getPrice();
+		this.dayLimit=account.getDayLimit();
+		this.monthLimit=account.getMonthLimit();
+		this.yearLimit=account.getYearLimit();
+	}
+	
 	//********************************************
 	//*************  CONTRUCTORS  ****************
 	//********************************************
@@ -37,7 +49,7 @@ public class Account extends BaseEntity{
 	public Account(LocalAccount account){
 		super(account);
 		this.name=account.getName();
-		this.pirce=account.getPirce();
+		this.price=account.getPrice();
 		this.dayLimit=account.getDayLimit();
 		this.monthLimit=account.getMonthLimit();
 		this.yearLimit=account.getYearLimit();
@@ -46,7 +58,7 @@ public class Account extends BaseEntity{
 	public Account(Account account){
 		super(account);
 		this.name=account.getName();
-		this.pirce=account.getPirce();
+		this.price=account.getPrice();
 		this.dayLimit=account.getDayLimit();
 		this.monthLimit=account.getMonthLimit();
 		this.yearLimit=account.getYearLimit();
@@ -55,12 +67,18 @@ public class Account extends BaseEntity{
 	//********************************************
 	//**********  GETTERS & SETTERS  *************
 	//********************************************
-	/** {@link BaseEntity#id} */
-	@Id
-	@GeneratedValue
+	/* (non-Javadoc) @see victor.com.multiwords.entity.BaseEntity#setId(java.lang.Long) */
+	@Override
+	public void setId(Long id) {
+		this.id=id;
+	}
+
+	/* (non-Javadoc) @see victor.com.multiwords.entity.BaseEntity#getId() */
+	@Override
 	public Long getId() {
 		return id;
 	}
+	
 	/** {@link Account#name} */
 	public String getName() {
 		return name;
@@ -69,14 +87,17 @@ public class Account extends BaseEntity{
 	public void setName(String name) {
 		this.name = name;
 	}
-	/** {@link Account#pirce} */
-	public BigDecimal getPirce() {
-		return pirce;
+	
+	/** {@link Account#price} */
+	public BigDecimal getPrice() {
+		return price;
 	}
-	/** {@link Account#pirce} */
-	public void setPirce(BigDecimal pirce) {
-		this.pirce = pirce;
+
+	/** {@link Account#price} */
+	public void setPrice(BigDecimal price) {
+		this.price = price;
 	}
+
 	/** {@link Account#dayLimit} */
 	public Integer getDayLimit() {
 		return dayLimit;
@@ -101,5 +122,6 @@ public class Account extends BaseEntity{
 	public void setYearLimit(Integer yearLimit) {
 		this.yearLimit = yearLimit;
 	}
+
 	
 }

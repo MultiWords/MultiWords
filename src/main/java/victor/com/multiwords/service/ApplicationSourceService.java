@@ -20,4 +20,7 @@ public class ApplicationSourceService {
 	@Autowired
 	private LocalApplicationSourceDAO localApplicationSourceDAO;
 	
+	public boolean checkConnection(){
+		return applicationSourceDAO.checkConnection();
+	}
 }

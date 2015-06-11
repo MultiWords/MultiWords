@@ -4,7 +4,10 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -12,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import victor.com.multiwords.entity.BaseEntity;
+import victor.com.multiwords.utils.ConnectionUtils;
 
 /**
  * @author <b>WRosinski</b><br/>
@@ -30,8 +34,29 @@ public class BaseEntityDAOImpl<T extends BaseEntity> implements BaseEntityDAO<T>
 	@SuppressWarnings("unchecked")
 	public BaseEntityDAOImpl(){
 		ParameterizedType paramType=(ParameterizedType) this.getClass().getGenericSuperclass();
-		persistentClass= (Class<T>) paramType.getActualTypeArguments()[0];
+		persistentClass= (Class<T>) paramType.getActualTypeArguments()[0];		
+	}
+	
+	@PostConstruct
+	private void init(){
 		session=sessionFactory.openSession();
+		if(! ConnectionUtils.isOpenConnection())
+			checkConnection();
+	}
+	
+	public boolean checkConnection(){
+		try{
+		Query query=session.createSQLQuery("SELECT usesysid, usename FROM pg_stat_activity;");
+		@SuppressWarnings("unchecked")
+		List<Object> results=query.list();
+		if(results!=null)
+			return true;
+		else
+			return false;
+		}catch(Exception e){
+			return false;
+		}
+		
 	}
 	
 	/* (non-Javadoc) @see victor.com.multiwords.dao.postgresql.BaseEntityDAO#persist(victor.com.multiwords.entity.BaseEntity) */
@@ -41,10 +66,8 @@ public class BaseEntityDAOImpl<T extends BaseEntity> implements BaseEntityDAO<T>
 		session.beginTransaction();
 		if(entity.getId()==null){
 			entity.setCreated(new Date());
-			entity.setUpdated(new Date());
-		}else{
-			entity.setUpdated(new Date());
 		}
+		entity.setUpdated(new Date());
 		session.persist(entity);
 		session.getTransaction().commit();
 

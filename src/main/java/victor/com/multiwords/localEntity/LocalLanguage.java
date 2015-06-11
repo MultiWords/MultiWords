@@ -3,6 +3,7 @@ package victor.com.multiwords.localEntity;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -18,13 +19,19 @@ import victor.com.multiwords.entity.Language;
 @Table(name="Language")
 public class LocalLanguage extends LocalBaseEntity{
 
+	@Id
+	@GeneratedValue
+	private Long id;
+	
 	/** nazwa jezyka */
 	private String name;
 	
 	//************  RELATIONS  *******************
 	/** lista zestawow nalezaca do tego jezyka */
+	@OneToMany(mappedBy="language")
 	private List<LocalWordsPacket> wordsPacketList;
 	/** klawiatura przypisana do jezyka */
+	@ManyToOne
 	private LocalKeyboard keyboard;
 	
 	//********************************************
@@ -47,11 +54,19 @@ public class LocalLanguage extends LocalBaseEntity{
 	//********************************************
 	//**********  GETTERS & SETTERS  *************
 	//********************************************
-	/** {@link LocalBaseEntity#id} */
-	@Id
+
+	/* (non-Javadoc) @see victor.com.multiwords.localEntity.LocalBaseEntity#setId(java.lang.Long) */
+	@Override
+	public void setId(Long id) {
+		this.id=id;
+	}
+
+	/* (non-Javadoc) @see victor.com.multiwords.localEntity.LocalBaseEntity#getId() */
+	@Override
 	public Long getId() {
 		return id;
 	}
+	
 	/** {@link LocalLanguage#name} */
 	public String getName() {
 		return name;

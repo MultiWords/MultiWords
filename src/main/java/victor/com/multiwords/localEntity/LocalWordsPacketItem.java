@@ -3,6 +3,7 @@ package victor.com.multiwords.localEntity;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -17,6 +18,10 @@ import victor.com.multiwords.entity.WordsPacketItem;
 @Table(name="WordsPacketItem")
 public class LocalWordsPacketItem extends LocalBaseEntity{
 
+	@Id
+	@GeneratedValue
+	private Long id;
+	
 	/** dodatkowy opis na elemencie zestwu wyrazow */
 	private String description;
 	/** przyklad dodany do elementu zestawu wyrazow */
@@ -34,6 +39,7 @@ public class LocalWordsPacketItem extends LocalBaseEntity{
 	
 	//************  RELATIONS  *******************
 	/** zestaw do ktorego zostal wyraz przypisany */
+	@ManyToOne
 	private LocalUserWordsPacket userWordsPacket;
 	
 	//********************************************
@@ -76,11 +82,18 @@ public class LocalWordsPacketItem extends LocalBaseEntity{
 	//**********  GETTERS & SETTERS  *************
 	//********************************************
 
-	/** {@link LocalBaseEntity#id} */
-	@Id
+	/* (non-Javadoc) @see victor.com.multiwords.localEntity.LocalBaseEntity#setId(java.lang.Long) */
+	@Override
+	public void setId(Long id) {
+		this.id=id;
+	}
+
+	/* (non-Javadoc) @see victor.com.multiwords.localEntity.LocalBaseEntity#getId() */
+	@Override
 	public Long getId() {
 		return id;
 	}
+	
 	/** {@link LocalWordsPacketItem#description} */
 	public String getDescription() {
 		return description;

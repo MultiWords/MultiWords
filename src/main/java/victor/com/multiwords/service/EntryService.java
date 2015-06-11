@@ -19,4 +19,8 @@ public class EntryService {
 	private EntryDAO entryDAO;
 	@Autowired
 	private LocalEntryDAO localEntryDAO;
+	
+	public boolean checkConnection(){
+		return entryDAO.checkConnection();
+	}
 }

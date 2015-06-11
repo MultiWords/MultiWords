@@ -3,10 +3,9 @@ package victor.com.multiwords.entity;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
 import victor.com.multiwords.localEntity.LocalLanguage;
 
@@ -15,15 +14,24 @@ import victor.com.multiwords.localEntity.LocalLanguage;
  *<br/>
  */
 @Entity
+@SequenceGenerator(name = "sequence_gen", initialValue=1, allocationSize=1, sequenceName="language_sequence")
 public class Language extends BaseEntity{
 
 	/** nazwa jezyka */
 	private String name;
 	
+	
+	public void clone(LocalLanguage language){
+		super.clone(language);
+		this.name=language.getName();
+	}
+	
 	//************  RELATIONS  *******************
 	/** lista zestawow nalezaca do tego jezyka */
+	@OneToMany(mappedBy="language")
 	private List<WordsPacket> wordsPacketList;
 	/** klawiatura przypisana do jezyka */
+	@ManyToOne
 	private Keyboard keyboard;
 	
 	//********************************************
@@ -45,12 +53,7 @@ public class Language extends BaseEntity{
 	//********************************************
 	//**********  GETTERS & SETTERS  *************
 	//********************************************
-	/** {@link BaseEntity#id} */
-	@Id
-	@GeneratedValue
-	public Long getId() {
-		return id;
-	}
+
 	/** {@link Language#name} */
 	public String getName() {
 		return name;

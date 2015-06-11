@@ -19,4 +19,8 @@ public class UserAccountService {
 	private UserAccountDAO userAccountDAO;
 	@Autowired
 	private LocalUserDAO localUserDAO;
+	
+	public boolean checkConnection(){
+		return userAccountDAO.checkConnection();
+	}
 }

@@ -1,9 +1,8 @@
 package victor.com.multiwords.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 
 import victor.com.multiwords.localEntity.LocalWordsPacket;
 
@@ -12,15 +11,19 @@ import victor.com.multiwords.localEntity.LocalWordsPacket;
  *Zestaw wyrazow<br/>
  */
 @Entity
+@SequenceGenerator(name = "sequence_gen", initialValue=1, allocationSize=1, sequenceName="words_packet_sequence")
 public class WordsPacket extends BaseEntity{
 
+	
 	/** nazwa pakietu */
 	private String name;
 	
 	//************  RELATIONS  *******************
 	/** orginalny zestaw */
+	@ManyToOne
 	private UserWordsPacket wordsPacketAsSource;
 	/** jezyk do ktorego jest przypisany zestaw */
+	@ManyToOne
 	private Language language;
 	
 	
@@ -43,12 +46,8 @@ public class WordsPacket extends BaseEntity{
 	//********************************************
 	//**********  GETTERS & SETTERS  *************
 	//********************************************
-	/** {@link BaseEntity#id} */
-	@Id
-	@GeneratedValue
-	public Long getId() {
-		return id;
-	}
+
+	
 	/** {@link WordsPacket#name} */
 	public String getName() {
 		return name;

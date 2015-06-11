@@ -19,4 +19,8 @@ public class KeyboardService {
 	private KeyboardDAO keyboardDAO;
 	@Autowired
 	private LocalKeyboardDAO localKeyboardDAO;
+	
+	public boolean checkConnection(){
+		return keyboardDAO.checkConnection();
+	}
 }

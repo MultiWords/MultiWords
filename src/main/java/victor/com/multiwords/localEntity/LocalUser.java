@@ -3,19 +3,22 @@ package victor.com.multiwords.localEntity;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import victor.com.multiwords.entity.User;
 
-@NamedQuery(name="user_maxId", query="SELECT MAX(id) FROM User")
 @Entity
 @Table(name="MultiWordsUser")
 public class LocalUser extends LocalBaseEntity{
 
+	@Id
+	@GeneratedValue
+	private Long id;
+	
 	/** imie uzytkownika */
 	private String name;
 	/** nazwisko uzytkownika */
@@ -35,14 +38,31 @@ public class LocalUser extends LocalBaseEntity{
 	
 	//************  RELATIONS  *******************
 	/** lista aktywnych  */
+	@OneToMany(mappedBy="user")
 	private List<LocalUserAccount> accountList;
 	/** jezyk ojczysty */
+	@ManyToOne
 	private LocalLanguage ownLanguage;
 	/** lista uczonych jezykow */
+	@OneToMany(mappedBy="user")
 	private List<LocalUserLanguage> languageList;
 	/** lista platnosci */
+	@OneToMany(mappedBy="user")
 	private List<LocalPayment> paymentList;
 	
+	
+	public void clone(User user){
+		this.sourceId=user.getId();
+		this.created=user.getCreated();
+		this.updated=user.getUpdated();
+		this.name=user.getName();
+		this.surname=user.getSurname();
+		this.login=user.getLogin();
+		this.password=user.getPassword();
+		this.email=user.getEmail();
+		this.helpQuestion=user.getHelpQuestion();
+		this.helpAnswer=user.getHelpAnswer();
+	}
 	
 	//********************************************
 	//*************  CONTRUCTORS  ****************
@@ -78,11 +98,19 @@ public class LocalUser extends LocalBaseEntity{
 	//********************************************
 	//**********  GETTERS & SETTERS  *************
 	//********************************************
-	/** {@link LocalBaseEntity#id} */
-	@Id
+
+	/* (non-Javadoc) @see victor.com.multiwords.localEntity.LocalBaseEntity#setId(java.lang.Long) */
+	@Override
+	public void setId(Long id) {
+		this.id=id;
+	}
+
+	/* (non-Javadoc) @see victor.com.multiwords.localEntity.LocalBaseEntity#getId() */
+	@Override
 	public Long getId() {
 		return id;
 	}
+	
 	/** {@link LocalUser#name} */
 	public String getName() {
 		return name;

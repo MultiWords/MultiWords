@@ -19,4 +19,8 @@ public class LanguageService {
 	private LanguageDAO languageDAO;
 	@Autowired
 	private LocalLanguageDAO localLanguageDAO;
+	
+	public boolean checkConnection(){
+		return languageDAO.checkConnection();
+	}
 }

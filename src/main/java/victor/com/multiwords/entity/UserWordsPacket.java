@@ -3,10 +3,9 @@ package victor.com.multiwords.entity;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
 import victor.com.multiwords.localEntity.LocalUserWordsPacket;
 
@@ -15,7 +14,9 @@ import victor.com.multiwords.localEntity.LocalUserWordsPacket;
  *Zestaw wyrazow uzytkownika<br/>
  */
 @Entity
+@SequenceGenerator(name = "sequence_gen", initialValue=1, allocationSize=1, sequenceName="user_words_packet_sequence")
 public class UserWordsPacket extends BaseEntity{
+	
 	
 	/** nazwa zestawu uzytkownika */
 	private String name;
@@ -26,15 +27,25 @@ public class UserWordsPacket extends BaseEntity{
 	
 	//************  RELATIONS  *******************
 	/** jezyk do ktorego zostal zestaw przypisany */
+	@ManyToOne
 	private UserLanguage userLanguage;
 	/** publiczny zestaw do ktorego nalezy ten zestaw */
+	@ManyToOne
 	private WordsPacket wordsPacket;
 	/** lista wyrazow przypisana do zestawu */
+	@OneToMany(mappedBy="userWordsPacket")
 	private List<WordsPacketItem> packetItemList;
 	/** wyraz ojczysty */
+	@ManyToOne
 	private Word nativeWord;
 	/** wyraz obcy */
+	@ManyToOne
 	private Word foreignWord;
+	
+	
+	public void clone(LocalUserWordsPacket userWordsPacket){
+		
+	}
 	
 	//********************************************
 	//*************  CONTRUCTORS  ****************
@@ -64,12 +75,7 @@ public class UserWordsPacket extends BaseEntity{
 	//********************************************
 	//**********  GETTERS & SETTERS  *************
 	//********************************************
-	/** {@link BaseEntity#id} */
-	@Id
-	@GeneratedValue
-	public Long getId() {
-		return id;
-	}
+
 
 
 	/** {@link UserWordsPacket#name} */

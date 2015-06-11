@@ -19,4 +19,9 @@ public class UserWordsPacketService {
 	private UserWordsPacketDAO userWordsPacketDAO;
 	@Autowired
 	private LocalUserWordsPacketDAO localUserWordsPacketDAO;
+	
+	public boolean checkConnection(){
+		return userWordsPacketDAO.checkConnection();
+	}
+	
 }

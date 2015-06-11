@@ -3,6 +3,7 @@ package victor.com.multiwords.localEntity;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -18,6 +19,10 @@ import victor.com.multiwords.entity.UserLanguage;
 @Table(name="UserLanguage")
 public class LocalUserLanguage extends LocalBaseEntity{
 
+	@Id
+	@GeneratedValue
+	private Long id;
+	
 	/** nazwa jezyka uzytkownika - uzytkownik moze nazwac jezyk po swojemu */
 	private String name;
 	/** liczba wyrazow do nauki dziennie */
@@ -35,12 +40,16 @@ public class LocalUserLanguage extends LocalBaseEntity{
 	
 	//************  RELATIONS  *******************
 	/** wlasciciel jezyka - osoba uczaca sie tego jezyka */
+	@ManyToOne
 	private LocalUser user;
 	/** jezyk do ktorego nalezy jezyk uzytkownika */
+	@ManyToOne
 	private LocalLanguage language;
 	/** lista logowan - wejsc */
+	@OneToMany(mappedBy="userLanguage")
 	private List<LocalEntry> entryList;
 	/** lista zestawow wyrazow przypisana do jezyka */
+	@OneToMany(mappedBy="userLanguage")
 	private List<LocalUserWordsPacket> wordsPacketList;
 	
 	
@@ -83,11 +92,19 @@ public class LocalUserLanguage extends LocalBaseEntity{
 	//********************************************
 	//**********  GETTERS & SETTERS  *************
 	//********************************************
-	/** {@link LocalBaseEntity#id} */
-	@Id
+
+	/* (non-Javadoc) @see victor.com.multiwords.localEntity.LocalBaseEntity#setId(java.lang.Long) */
+	@Override
+	public void setId(Long id) {
+		this.id=id;
+	}
+
+	/* (non-Javadoc) @see victor.com.multiwords.localEntity.LocalBaseEntity#getId() */
+	@Override
 	public Long getId() {
 		return id;
 	}
+	
 
 
 	/** {@link LocalUserLanguage#name} */

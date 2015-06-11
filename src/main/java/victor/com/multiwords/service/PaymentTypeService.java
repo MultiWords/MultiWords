@@ -19,4 +19,8 @@ public class PaymentTypeService {
 	private PaymentTypeDAO paymentTypeDAO;
 	@Autowired
 	private LocalPaymentTypeDAO localPaymentTypeDAO;
+	
+	public boolean checkConnection(){
+		return paymentTypeDAO.checkConnection();
+	}
 }

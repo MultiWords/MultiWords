@@ -1,4 +1,4 @@
-package victor.com.multiwords;
+package victor.com.multiwords.sqlite;
 
 import java.sql.SQLException;
 

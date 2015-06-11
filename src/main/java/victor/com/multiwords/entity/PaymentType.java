@@ -1,8 +1,7 @@
 package victor.com.multiwords.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 import victor.com.multiwords.localEntity.LocalPaymentType;
 
@@ -11,10 +10,16 @@ import victor.com.multiwords.localEntity.LocalPaymentType;
  *<br/>
  */
 @Entity
+@SequenceGenerator(name = "sequence_gen", initialValue=1, allocationSize=1, sequenceName="payment_type_sequence")
 public class PaymentType extends BaseEntity{
 
 	/** nazwa typu platnosci */
 	private String name;
+	
+	public void clone(LocalPaymentType paymentType){
+		super.clone(paymentType);
+		this.name=paymentType.getName();
+	}
 	
 	//************  RELATIONS  *******************
 
@@ -36,12 +41,7 @@ public class PaymentType extends BaseEntity{
 	//********************************************
 	//**********  GETTERS & SETTERS  *************
 	//********************************************
-	/** {@link BaseEntity#id} */
-	@Id
-	@GeneratedValue
-	public Long getId() {
-		return id;
-	}
+
 	/** {@link PaymentType#name} */
 	public String getName() {
 		return name;

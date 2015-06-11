@@ -19,4 +19,9 @@ public class WordService {
 	private WordDAO wordDAO;
 	@Autowired
 	private LocalWordDAO localWordDAO;
+	
+	public boolean checkConnection(){
+		return wordDAO.checkConnection();
+	}
+	
 }

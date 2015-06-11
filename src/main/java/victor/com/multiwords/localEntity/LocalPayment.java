@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -17,7 +18,11 @@ import victor.com.multiwords.entity.Payment;
 @Entity
 @Table(name="Payment")
 public class LocalPayment extends LocalBaseEntity{
-
+	
+	@Id
+	@GeneratedValue
+	private Long id;
+	
 	/** data platnosci */
 	private Date paymentDate;
 	/** kwota platnosci */
@@ -29,10 +34,13 @@ public class LocalPayment extends LocalBaseEntity{
 	
 	//************  RELATIONS  *******************
 	/** wlasciciel platnosci */
+	@ManyToOne
 	private LocalUser user;
 	/** typ platnosci - czego dotyczy */
+	@ManyToOne
 	private LocalPaymentType paymentType;
 	/** informacja, ktorej aplikacji dotyczy platnosc */
+	@ManyToOne
 	private LocalApplicationSource appSource;
 	
 	//********************************************
@@ -61,11 +69,19 @@ public class LocalPayment extends LocalBaseEntity{
 	//********************************************
 	//**********  GETTERS & SETTERS  *************
 	//********************************************
-	/** {@link LocalBaseEntity#id} */
-	@Id
+
+	/* (non-Javadoc) @see victor.com.multiwords.localEntity.LocalBaseEntity#setId(java.lang.Long) */
+	@Override
+	public void setId(Long id) {
+		this.id=id;
+	}
+
+	/* (non-Javadoc) @see victor.com.multiwords.localEntity.LocalBaseEntity#getId() */
+	@Override
 	public Long getId() {
 		return id;
 	}
+	
 	/** {@link LocalPayment#paymentDate} */
 	public Date getPaymentDate() {
 		return paymentDate;

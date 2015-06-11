@@ -1,6 +1,7 @@
 package victor.com.multiwords.localEntity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -15,13 +16,19 @@ import victor.com.multiwords.entity.WordsPacket;
 @Table(name="WordsPacket")
 public class LocalWordsPacket extends LocalBaseEntity{
 
+	@Id
+	@GeneratedValue
+	private Long id;
+	
 	/** nazwa pakietu */
 	private String name;
 	
 	//************  RELATIONS  *******************
 	/** orginalny zestaw */
+	@ManyToOne
 	private LocalUserWordsPacket wordsPacketAsSource;
 	/** jezyk do ktorego jest przypisany zestaw */
+	@ManyToOne
 	private LocalLanguage language;
 	
 	
@@ -45,11 +52,19 @@ public class LocalWordsPacket extends LocalBaseEntity{
 	//********************************************
 	//**********  GETTERS & SETTERS  *************
 	//********************************************
-	/** {@link LocalBaseEntity#id} */
-	@Id
+	
+	/* (non-Javadoc) @see victor.com.multiwords.localEntity.LocalBaseEntity#setId(java.lang.Long) */
+	@Override
+	public void setId(Long id) {
+		this.id=id;
+	}
+
+	/* (non-Javadoc) @see victor.com.multiwords.localEntity.LocalBaseEntity#getId() */
+	@Override
 	public Long getId() {
 		return id;
 	}
+	
 	/** {@link LocalWordsPacket#name} */
 	public String getName() {
 		return name;

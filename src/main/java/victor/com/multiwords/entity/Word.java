@@ -1,9 +1,8 @@
 package victor.com.multiwords.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 
 import victor.com.multiwords.localEntity.LocalWord;
 
@@ -12,6 +11,7 @@ import victor.com.multiwords.localEntity.LocalWord;
  *<br/>
  */
 @Entity
+@SequenceGenerator(name = "sequence_gen", initialValue=1, allocationSize=1, sequenceName="words_sequence")
 public class Word extends BaseEntity{
 	
 	/** wyraz */
@@ -29,6 +29,7 @@ public class Word extends BaseEntity{
 	
 	//************  RELATIONS  *******************
 	/** jezyk, do ktorego nalezy wyraz */
+	@ManyToOne
 	private Language language;
 	
 	
@@ -61,12 +62,8 @@ public class Word extends BaseEntity{
 	//********************************************
 	//**********  GETTERS & SETTERS  *************
 	//********************************************
-	/** {@link BaseEntity#id} */
-	@Id
-	@GeneratedValue
-	public Long getId() {
-		return id;
-	}
+
+	
 	/** {@link Word#word} */
 	public String getWord() {
 		return word;

@@ -4,9 +4,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 
 import victor.com.multiwords.localEntity.LocalPayment;
 
@@ -15,8 +14,10 @@ import victor.com.multiwords.localEntity.LocalPayment;
  *<br/>
  */
 @Entity
+@SequenceGenerator(name = "sequence_gen", initialValue=1, allocationSize=1, sequenceName="payment_sequence")
 public class Payment extends BaseEntity{
 
+	
 	/** data platnosci */
 	private Date paymentDate;
 	/** kwota platnosci */
@@ -28,11 +29,23 @@ public class Payment extends BaseEntity{
 	
 	//************  RELATIONS  *******************
 	/** wlasciciel platnosci */
+	@ManyToOne
 	private User user;
 	/** typ platnosci - czego dotyczy */
+	@ManyToOne
 	private PaymentType paymentType;
 	/** informacja, ktorej aplikacji dotyczy platnosc */
+	@ManyToOne
 	private ApplicationSource appSource;
+	
+	
+	public void clone(LocalPayment payment){
+		super.clone(payment);
+		this.paymentDate=payment.getPaymentDate();
+		this.amount=payment.getAmount();
+		this.title=payment.getTitle();
+		this.bankAccountNumber=payment.getBankAccountNumber();
+	}
 	
 	//********************************************
 	//*************  CONTRUCTORS  ****************
@@ -59,12 +72,7 @@ public class Payment extends BaseEntity{
 	//********************************************
 	//**********  GETTERS & SETTERS  *************
 	//********************************************
-	/** {@link BaseEntity#id} */
-	@Id
-	@GeneratedValue
-	public Long getId() {
-		return id;
-	}
+	
 	/** {@link Payment#paymentDate} */
 	public Date getPaymentDate() {
 		return paymentDate;

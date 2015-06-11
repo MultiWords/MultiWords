@@ -10,6 +10,7 @@ import victor.com.multiwords.entity.BaseEntity;
  */
 public interface BaseEntityDAO<T extends BaseEntity> {
 
+	public boolean checkConnection();
 	public void persist(T entity);
 	public void delete(T entity);
 	public T findById(Long id);

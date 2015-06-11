@@ -4,6 +4,8 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -32,8 +34,11 @@ public class LocalBaseEntityDAOImpl<T extends LocalBaseEntity> implements LocalB
 	public LocalBaseEntityDAOImpl(){
 		ParameterizedType paramType= (ParameterizedType) this.getClass().getGenericSuperclass();
 		persistentClass= (Class<T>) paramType.getActualTypeArguments()[0];
+	}
+	
+	@PostConstruct
+	private void init(){
 		session=sessionFactory.openSession();
-		
 	}
 
 	/* (non-Javadoc) @see victor.com.multiwords.dao.sqlite.LocalBaseEntityDAO#persist(victor.com.multiwords.localEntity.LocalBaseEntity) */
@@ -42,10 +47,8 @@ public class LocalBaseEntityDAOImpl<T extends LocalBaseEntity> implements LocalB
 		session.beginTransaction();
 		if(entity.getId()==null){
 			entity.setCreated(new Date());
-			entity.setUpdated(new Date());
-		}else{
-			entity.setUpdated(new Date());
 		}
+		entity.setUpdated(new Date());
 		session.persist(entity);
 		session.getTransaction().commit();
 
